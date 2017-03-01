@@ -1,0 +1,130 @@
+body{
+background:black;
+}
+.main{
+width:750px;
+margin:0 auto;
+background:#f4f4f4;
+overflow:hidden;
+position:relative;
+}
+header{height:100px;
+background:#f34336;
+}
+header p{height:100px;
+line-height:100px;
+text-align:center;
+color:white;
+font-size:30px;}
+header img{position:absolute;
+left:39px;
+top:18px;}
+.s_left{
+padding:47px 41px 0px 36px;
+width:63px;
+height:961px;
+float:left;
+background:#f4f4f4;
+border-right:1px solid #dedede}
+.s_left .circle{
+width:63px;
+height:63px;
+border-radius:50%;
+background:#dbdbdb;
+cursor:pointer;
+}
+.s_left .circle1{
+background:#f34336;
+}
+.s_left img{margin:10px 0px 0px 13px}
+.s_left p{
+height:53px;
+line-height:53px;
+text-align:center;
+font-size:22px;
+color:#3a3a3a
+}
+.s_left .line{
+width:3px;
+height:45px;
+margin:0px auto;
+background:#dbdbdb;
+}
+.s_right{
+padding:0 20px;
+width:569px;
+height:1008px;
+float:left;
+background:white;}
+.s_right h2{
+height:64px;
+line-height:64px;
+color:#727a7f;
+font-size:22px;
+}
+.s_right li{height:497px;position:relative}
+.s_right h4{
+height:60px;
+line-height:60px;
+font-size:27px;
+}
+.s_right p{
+line-height:43px;
+font-size:25px;
+}
+.s_right span{
+color:#9da0a8;
+}
+.s_right .num{
+position:absolute;
+font-size:25px;
+color:black;
+height:60px;
+right:70px;
+bottom:50px;
+line-height:80px;
+background:white;
+border-bottom:none;
+}
+.s_right button{
+width:50px;
+height:50px;
+border-radius:50%;
+background:#f34336;
+border:none;
+font-size:25px;
+color:white;
+position:absolute;
+}
+.s_right .add0,.s_right .add1,.s_right .add2,.s_right .add3,.s_right .add4{right:0px;
+bottom:50px}
+.s_right .plus0,.s_right .plus1,.s_right .plus2,.s_right .plus3,.s_right .plus4{right:100px;
+bottom:50px;
+background:white;
+color:#f34336;
+border:solid 1px #f34336}
+footer{
+float:left;
+height:101px;
+}
+.footer_left{
+width:524px;
+height:101px;
+background:#3e3a39;
+font-size:30px;
+color:white;
+float:left;
+line-height:101px;
+text-indent:26px;
+}
+.footer_right{
+width:226px;
+height:101px;
+line-height:101px;
+background:#6b615e;
+font-size:30px;
+color:#999999;
+float:left;
+text-align:center;
+cursor:pointer;
+}

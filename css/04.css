@@ -1,0 +1,47 @@
+body{
+background:black;
+}
+.main{
+width:750px;
+margin:0 auto;
+background:#f4f4f4;
+overflow:hidden;
+}
+header{
+margin-top:232px;
+height:222px;
+}
+header div{
+height:222px;width:222px;
+margin:0 auto;
+border-radius:50%;
+background:white;
+}
+header img{
+margin:67px 73px;
+}
+p{
+height:114px;
+line-height:114px;
+font-size:32px;
+color:#ababab;
+text-align:center;
+}
+footer{
+height:195px;
+margin-bottom:448px;
+}
+footer button{
+width:227px;
+height:82px;
+background:#f34336;
+color:white;
+text-align:center;
+line-height:82px;
+margin:56px auto;
+display:block;
+border:none;
+border-radius:5px;
+font-size:30px;
+cursor:pointer
+}

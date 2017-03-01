@@ -1,0 +1,20 @@
+[{
+  "id": 1,
+  "name": "主菜",
+  "icon": "http://dummyimage.com/64x64/ccc/333.jpg",
+  "items": [{
+    "id": 3,
+    "name": "二斤耗儿鱼",
+    "price": 228,
+    "unit": "锅",
+    "pic": "img/03.jpg",
+    "num": 1
+  }, {
+    "id": 4,
+    "name": "鱼香茄子",
+    "price": 228,
+    "unit": "份",
+    "pic": "img/04.jpg",
+    "num": 1
+  }]
+}]

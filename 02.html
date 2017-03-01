@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <meta name="viewport" content="width=750,user-scalable=0" >
+    <title>查看菜品</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/02.css">
+</head>
+<body>
+<div class="cover">
+    <div>
+        <p>确定让厨房制作菜品了吗？</p>
+        <button class="clear">取消</button>
+        <button class="ok">确定</button>
+    </div>
+</div>
+    <div class="main">
+        <header>
+            <div class="callback"><</div>
+            <p>确认订单</p>
+        </header>
+        <section>
+            <div class="box">
+                <div class="box_b">啊国是糖</div>
+                <ul id="caiList"></ul>
+            </div>
+            <p>备注：(选填)请输入您的口味、要求、忌口等</p>
+        </section>
+        <footer>
+            <div class="footer_left">已点0道菜</div>
+            <div class="footer_right">传送厨房</div>
+        </footer>
+    </div>
+
+</body>
+</html>
+<script src="zepto.min.js"></script>
+<script>
+    $(function(){
+        getTotal();
+        $('.cover').css('display','none')
+        var oLi = '';
+        storage = JSON.parse(localStorage.data);
+        for(i=0;i<storage.length;i++){
+            oLi += '<li><h4>'+ storage[i].name+'</h4><p>￥'+ storage[i].price+'<span>/'+storage[i].unit+'</span></p><button class="plus" data-id="'+storage[i].id+'">-</button><button class="add" data-id="'+storage[i].id+'">+</button><div class="num"> '+ storage[i].num+' </div></li>'
+        }
+        $('#caiList').append(oLi);
+        $('#caiList').on('click','li .add',function(){
+
+
+                storage = JSON.parse(localStorage.data);
+                for(i=0;i<storage.length;i++){
+                    if(storage[i].id==$(this).data('id')){
+                       var a = ++storage[i].num;
+                        localStorage.data = JSON.stringify(storage);
+                        break;
+                    }
+                }
+            $(this).closest('li').find('.num').text(a);
+
+
+
+            getTotal()
+        })
+        $('#caiList').on('click','li .plus',function(){
+                storage = JSON.parse(localStorage.data);
+                for(i=0;i<storage.length;i++){
+                    if(storage[i].id==$(this).data('id')){
+                        var a = --storage[i].num
+                        if(storage[i].num>0){
+                            localStorage.data = JSON.stringify(storage);
+                            $(this).closest('li').find('.num').text(a);
+                            break;}else{for(j=i;j<storage.length;j++){
+                            storage[j]=storage[j+1];
+                            storage.length--;
+                            localStorage.data = JSON.stringify(storage);
+                            $(this).closest('li').remove();
+                        }
+
+                        }
+                    }
+                }
+
+
+
+            getTotal()
+        })
+        function getTotal(){
+            //判断本地存储有么有东西
+            if(localStorage.data){
+                var total = 0;
+                storage = JSON.parse(localStorage.data);
+                for(var i=0;i<storage.length;i++){
+                    total += storage[i].num;
+                };
+                $('.footer_left').html('已点'+total+'道菜')
+            }else{
+                $('.footer_left').html('已点0道菜')
+            }
+        }
+        $('.footer_right').click(function(){
+            $('.cover').show()
+        })
+        $('.clear').click(function(){
+            $('.cover').hide()
+        })
+        $('.ok').click(function(){
+          location.href='04.html'
+        })
+        $('.callback').click(function(){
+            location.href='01.html'
+        })
+    })
+
+</script>

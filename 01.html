@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=750,user-scalable=0" >
+    <title>渝北店,8号桌</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/01.css">
+</head>
+<body>
+<div class="main">
+    <header>
+        <img src="img/02.jpg">
+        <p>渝北店，8号桌</p>
+    </header>
+<section>
+<div class="s_left">
+    <div class="circle circle1"><img src="img/01.png"></div>
+    <p>主菜</p>
+    <div class="line"></div>
+    <div class="circle"><img src="img/02.png"></div>
+    <p>热菜</p>
+    <div class="line"></div>
+    <div class="circle"><img src="img/03.png"></div>
+    <p>凉菜</p>
+    <div class="line"></div>
+    <div class="circle"><img src="img/04.png"></div>
+    <p>汤品</p>
+    <div class="line"></div>
+    <div class="circle"><img src="img/05.png"></div>
+    <p>点心</p>
+</div>
+    <div class="s_right">
+        <h2>
+            主菜
+        </h2>
+        <ul id="caiList">
+        </ul>
+    </div>
+</section>
+<footer>
+    <div class="footer_left">已点0道菜</div>
+    <div class="footer_right">已点菜单</div>
+</footer>
+</div>
+</body>
+</html>
+<script src="zepto.min.js"></script>
+<script>
+    $(function(){
+        var storage = []
+        getTotal();
+        $.ajax({
+                url : 'groups.json',
+                success : function(data){
+                    var cai = data[0].items;
+                    add(cai,0);
+                    huancun();
+                    p(0);
+                    click(cai,1,0);
+
+
+
+                }
+            })
+        $.ajax({
+            url : 'groups.json',
+            success : function(data){
+                cai = data[1].items;
+                add(cai,1)
+                huancun();
+                p(1);
+                click(cai,3,1);
+
+
+            }
+        })
+        $.ajax({
+            url : 'groups.json',
+            success : function(data){
+                cai = data[2].items;
+                add(cai,2)
+                huancun();
+                p(2);
+                click(cai,5,2);
+
+
+            }
+        })
+        $.ajax({
+            url : 'groups.json',
+            success : function(data){
+                cai = data[3].items;
+                add(cai,3)
+                huancun();
+                p(3);
+                click(cai,7,3);
+
+
+            }
+        })
+        $.ajax({
+            url : 'groups.json',
+            success : function(data){
+                cai = data[4].items;
+                add(cai,4)
+                huancun();
+                p(4);
+                click(cai,9,4);
+
+
+            }
+        })
+        function click(cai,m,n){
+            var strr="li .add"+n;
+            var strrr="li .plus"+n;
+            $('#caiList').on('click', strr, function(){
+                if(localStorage.data){
+                    var flag = 1;
+                    storage = JSON.parse(localStorage.data);
+                    for(i = 0; i < storage.length; i++){
+                        if(storage[i].id == $(this).data('id')){
+                            flag = 0;
+                            var a = ++storage[i].num;
+                            $(this).closest('li').find('.num').text(a);
+                            localStorage.data = JSON.stringify(storage);
+                            break;
+                        }
+                    }
+                    if(flag == 1){
+                        storage.push(cai[$(this).data('id') - m])
+                        $(this).closest('li').find('.num').text(1);
+                        localStorage.data = JSON.stringify(storage);
+                    }
+                }
+                else {
+                    storage.push(cai[$(this).data('id') - m])
+                    $(this).closest('li').find('.num').text(1);
+                    localStorage.data = JSON.stringify(storage);
+                }
+                getTotal()
+                var b = $(this).closest('li').find('.num').text()
+                var str=".plus"+n;
+                if(b > 0){
+                    $(this).closest('li').find('.num').show()
+
+                    $(this).closest('li').find(str).show()
+                }
+                else {
+                    $(this).closest('li').find('.num').hide()
+                    $(this).closest('li').find(str).hide()
+                }
+                p(n);
+            })
+            $('#caiList').on('click', strrr, function(){
+                if(localStorage.data){
+                    var flag = 1;
+                    storage = JSON.parse(localStorage.data);
+                    for(i = 0; i < storage.length; i++){
+                        if(storage[i].id == $(this).data('id')){
+                            flag = 0;
+                            var a = --storage[i].num;
+                            $(this).closest('li').find('.num').text(a);
+                            if(storage[i].num > 0){
+                                localStorage.data = JSON.stringify(storage);
+                                break;
+                            } else {
+                                for(j = i; j < storage.length; j++){
+                                    storage[j] = storage[j + 1];
+                                    storage.length--;
+                                    localStorage.data = JSON.stringify(storage);
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+                else {
+
+                }
+                getTotal()
+                var b = $(this).closest('li').find('.num').text()
+                if(b > 0){
+                    $(this).closest('li').find('.num').show()
+                    $(this).closest('li').find('.plus0').show()
+                }
+                else {
+                    $(this).closest('li').find('.num').hide()
+                    $(this).closest('li').find('.plus0').hide()
+                }
+                p(n);
+            })}//点击事件
+        function getTotal(){
+            //判断本地存储有么有东西
+            if(localStorage.data){
+                var total = 0;
+                storage = JSON.parse(localStorage.data);
+                for(var i=0;i<storage.length;i++){
+                    total += storage[i].num;
+                };
+                $('.footer_left').html('已点'+total+'道菜')
+            }else{
+                $('.footer_left').html('已点0道菜')
+            }
+        }//总和事件
+        function p(m){
+            var c = 0;
+            var d = 0;
+            for(j=0;j<$('#caiList').children('li').length;j++){
+                if($('#caiList').children('li').eq(j).find('.num').text()==0){
+                    $('#caiList').children('li').eq(j).find('.num').hide()
+                    var str =".plus"+m;
+                    $('#caiList').children('li').eq(j).find(str).hide()
+                }
+
+                c +=parseInt($('#caiList').children('li').eq(j).find('.num').text())
+            }
+            if(localStorage.data){
+                storage = JSON.parse(localStorage.data )
+                for(i=0;i<storage.length;i++){
+                    d +=storage[i].num;
+                }
+            if(d>0){
+                $('.footer_right').css('backgroundColor','#f34336').css('color','white')
+            }
+            else{
+                $('.footer_right').css('backgroundColor','#6b615e').css('color','#999999')
+            }}
+        }//变色事件
+        function add(cai,m){
+            var oLi = '';
+            for(var i = 0; i < cai.length; i++){
+                oLi += '<li><img src=' + cai[i].pic + '/><h4>' + cai[i].name + '</h4><p>￥' + cai[i].price + '<span>/' + cai[i].unit + '</span></p><button class="plus'+ m+'" data-id="' + cai[i].id + '">-</button><button class="add'+ m +'" data-id="' + cai[i].id + '">+</button><div class="num"> ' + (cai[i].num - 1) + ' </div></li>'
+            }
+            $('#caiList').append(oLi);}//    添加li标签
+        function huancun(){if(localStorage.data){
+            storage1 = JSON.parse(localStorage.data)
+            for(i=0;i<storage1.length;i++){
+                for(j=0;j<$('#caiList').children('li').length;j++){
+                    if($('#caiList').children('li').eq(j).find('button').data('id')==storage1[i].id){
+
+                        $('#caiList').children('li').eq(j).find('.num').text(storage1[i].num)
+                    }
+                }
+            }
+        }}//有缓存事件
+        $('.circle').click(function(){
+            $(this).css('backgroundColor','#f34336').siblings('.circle').css('backgroundColor',' #dbdbdb')
+            if(parseInt($(this).index())==3){
+                $('li').remove()
+                $.ajax({
+                    url : 'groups.json',
+                success : function(data){
+                cai = data[1].items;
+               add(cai,1)
+                huancun();
+                p(1);
+
+
+            }
+            })
+            }
+           else if(parseInt($(this).index())==6){
+                $('li').remove()
+                $.ajax({
+                    url : 'groups.json',
+                    success : function(data){
+                        cai = data[2].items;
+                        add(cai,2)
+                        huancun();
+                        p(2);
+
+
+                    }
+                })
+            }
+           else if(parseInt($(this).index())==9){
+                $('li').remove()
+                $.ajax({
+                    url : 'groups.json',
+                    success : function(data){
+                        cai = data[3].items;
+                        add(cai,3)
+                        huancun();
+                        p(3);
+
+
+                    }
+                })
+            }
+           else if(parseInt($(this).index())==12){
+                $('li').remove()
+                $.ajax({
+                    url : 'groups.json',
+                    success : function(data){
+                        cai = data[4].items;
+                        add(cai,4)
+                        huancun();
+                        p(4);
+
+
+                    }
+                })
+            }
+           else if(parseInt($(this).index())==0){
+                $('li').remove()
+                $.ajax({
+                    url : 'groups.json',
+                    success : function(data){
+                        cai = data[0].items;
+                        add(cai,0)
+                        huancun();
+                        p(0);
+
+
+                    }
+                })
+            }
+        })
+        $('.footer_right').click(function(){
+            location.href='02.html'
+        })
+
+    })
+
+
+</script>
